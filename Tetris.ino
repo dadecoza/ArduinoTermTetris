@@ -277,12 +277,12 @@ void loop() {
 	posX=4;
         rotation=0;
         currentBlock = rand() % 7;
+        clear_lines();
         draw_block();
         int cont = 1;
 	while (cont == 1) {
             Serial.write(27);
             Serial.print("[H");
-            clear_lines();
 	    draw_board();
             if (Serial.available() > 0) {
               int c = Serial.read();
