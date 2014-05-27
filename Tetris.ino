@@ -18,8 +18,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <EEPROM.h>
 
-int posX,posY,currentBlock,rotation,gameOver,score;
+
+int posX,posY,currentBlock,rotation,gameOver,score,highScore,level;
 
 int board[20][10];
 
@@ -220,6 +222,13 @@ void setup()
 {
   Serial.begin(9600);
   delay(100);
+  //reset terminal
+  Serial.write(27);
+  Serial.print("c");
+
+  //disable line wrap
+  Serial.write(27);
+  Serial.print("[7l");
   start();
 }
 
@@ -233,27 +242,20 @@ void start() {
   currentBlock = 0;
   rotation = 0;
   score = 0;
+  level = 1;
   gameOver = 0;
   
-  //reset terminal
-  Serial.write(27);
-  Serial.print("c");
-
-  //disable line wrap
-  Serial.write(27);
-  Serial.print("[7l");
+  //save_high_score(); //just to initialize it the firstime
+  highScore = get_high_score();
+  
   
   //hide cursor
   Serial.write(27);
   Serial.print("[?25l");
   
-  //clear screen
+  //clear screen;
   Serial.write(27);
-  Serial.print("[2J"); 
-  
-  //home cursor
-  Serial.write(27);
-  Serial.print("[H");
+  Serial.print("[2J");
   
   Serial.println("Press any key to start!");
   int c = 0;
@@ -273,7 +275,6 @@ void start() {
 
   draw_board(); 
 }
-
 
 void loop() {
   while (gameOver == 0) {
@@ -299,12 +300,18 @@ void loop() {
         } else if (c == 32) {
           while (move_down() == 1) {}
         }
+      } else {
+        cont = move_down();
       }
-      cont = move_down();
-      delay(20);
+      delay(60 - (10*level));
     }
     if (posY < 1) gameOver = 1;         
   }
+  
+  if (score > highScore) {
+    save_high_score();
+  }
+  
   start();  
 }
 
@@ -342,6 +349,9 @@ void clear_lines() {
       ni--;
     } else {
       score++;
+      if ((score % 10) == 0) {
+        level++;
+      }
     }
   }
  
@@ -362,10 +372,16 @@ void draw_board() {
         Serial.print(".");
       }
     }
-    if (y == 10) {
+    if (y == 2) {
+      Serial.print(" Level:");
+      Serial.println(level);
+    } else if (y == 4) {
       Serial.print(" Score:");
       Serial.println(score);
-    } else {
+    } else if (y == 6) {
+      Serial.print(" High Score:");
+      Serial.println(highScore);
+    }else {
       Serial.println();
     }
   }
@@ -476,4 +492,16 @@ void rotate() {
     rotation = p;
   }
   draw_block();
+}
+
+int get_high_score() {
+  long two = EEPROM.read(0);
+  long one = EEPROM.read(1);
+  return ((two << 0) & 0xFF) + ((one << 8) & 0xFFFF);
+}
+
+
+void save_high_score() {
+  EEPROM.write(0, (score & 0xFF));
+  EEPROM.write(1, ((score >> 8) & 0xFF));
 }
