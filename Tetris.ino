@@ -23,197 +23,197 @@
 
 int posX,posY,currentBlock,rotation,gameOver,score,highScore,level;
 
-int board[20][10];
+boolean board[20][10];
 
-int block[7][4][4][4] = 
+boolean const block[7][4][4][4]= 
 {
 //l-Block
   {
       {
-          {1,1,1,1},
-          {0,0,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,true,true},
+          {false,false,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,0,0,0},
-          {1,0,0,0},
-          {1,0,0,0},
-          {1,0,0,0}
+          {true,false,false,false},
+          {true,false,false,false},
+          {true,false,false,false},
+          {true,false,false,false}
       },
       {
-          {1,1,1,1},
-          {0,0,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,true,true},
+          {false,false,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,0,0,0},
-          {1,0,0,0},
-          {1,0,0,0},
-          {1,0,0,0}
+          {true,false,false,false},
+          {true,false,false,false},
+          {true,false,false,false},
+          {true,false,false,false}
       }
   },	
 //J-Block
   {
       {
-          {1,1,1,0},
-          {0,0,1,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,true,false},
+          {false,false,true,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {0,1,0,0},
-          {0,1,0,0},
-          {1,1,0,0},
-          {0,0,0,0}
+          {false,true,false,false},
+          {false,true,false,false},
+          {true,true,false,false},
+          {false,false,false,false}
       },
       {
-          {1,0,0,0},
-          {1,1,1,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,false,false,false},
+          {true,true,true,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,1,0,0},
-          {1,0,0,0},
-          {1,0,0,0},
-          {0,0,0,0}
+          {true,true,false,false},
+          {true,false,false,false},
+          {true,false,false,false},
+          {false,false,false,false}
       }
   },
 //L-Block
   {
       {
-          {1,1,1,0},
-          {1,0,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,true,false},
+          {true,false,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,1,0,0},
-          {0,1,0,0},
-          {0,1,0,0},
-          {0,0,0,0}
+          {true,true,false,false},
+          {false,true,false,false},
+          {false,true,false,false},
+          {false,false,false,false}
       },
       {
-          {0,0,1,0},
-          {1,1,1,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {false,false,true,false},
+          {true,true,true,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,0,0,0},
-          {1,0,0,0},
-          {1,1,0,0},
-          {0,0,0,0}
+          {true,false,false,false},
+          {true,false,false,false},
+          {true,true,false,false},
+          {false,false,false,false}
       }
   },
 //O-Block
   {
       {
-          {1,1,0,0},
-          {1,1,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,false,false},
+          {true,true,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,1,0,0},
-          {1,1,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,false,false},
+          {true,true,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,1,0,0},
-          {1,1,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,false,false},
+          {true,true,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,1,0,0},
-          {1,1,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,false,false},
+          {true,true,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       }
   },
 //S-Block
   {
       {
-          {0,1,1,0},
-          {1,1,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {false,true,true,false},
+          {true,true,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,0,0,0},
-          {1,1,0,0},
-          {0,1,0,0},
-          {0,0,0,0}
+          {true,false,false,false},
+          {true,true,false,false},
+          {false,true,false,false},
+          {false,false,false,false}
       },
       {
-          {0,1,1,0},
-          {1,1,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {false,true,true,false},
+          {true,true,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,0,0,0},
-          {1,1,0,0},
-          {0,1,0,0},
-          {0,0,0,0}
+          {true,false,false,false},
+          {true,true,false,false},
+          {false,true,false,false},
+          {false,false,false,false}
       }
   },
 //T-Block
   {
       {
-          {1,1,1,0},
-          {0,1,0,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,true,false},
+          {false,true,false,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {0,1,0,0},
-          {1,1,0,0},
-          {0,1,0,0},
-          {0,0,0,0}
+          {false,true,false,false},
+          {true,true,false,false},
+          {false,true,false,false},
+          {false,false,false,false}
       },
       {
-          {0,1,0,0},
-          {1,1,1,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {false,true,false,false},
+          {true,true,true,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,0,0,0},
-          {1,1,0,0},
-          {1,0,0,0},
-          {0,0,0,0}
+          {true,false,false,false},
+          {true,true,false,false},
+          {true,false,false,false},
+          {false,false,false,false}
       }
   },
 //Z-Block
   {
       {
-          {1,1,0,0},
-          {0,1,1,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,false,false},
+          {false,true,true,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {0,1,0,0},
-          {1,1,0,0},
-          {1,0,0,0},
-          {0,0,0,0}
+          {false,true,false,false},
+          {true,true,false,false},
+          {true,false,false,false},
+          {false,false,false,false}
       },
       {
-          {1,1,0,0},
-          {0,1,1,0},
-          {0,0,0,0},
-          {0,0,0,0}
+          {true,true,false,false},
+          {false,true,true,false},
+          {false,false,false,false},
+          {false,false,false,false}
       },
       {
-          {0,1,0,0},
-          {1,1,0,0},
-          {1,0,0,0},
-          {0,0,0,0}
+          {false,true,false,false},
+          {true,true,false,false},
+          {true,false,false,false},
+          {false,false,false,false}
       }
   }
 }; 
@@ -277,15 +277,15 @@ void start() {
 }
 
 void loop() {
-  while (gameOver == 0) {
+  while (!gameOver) {
     posY=0;
     posX=4;
     rotation=0;
     currentBlock = rand() % 7;
     clear_lines();
     draw_block();
-    int cont = 1;
-    while (cont == 1) {
+    boolean cont = true;
+    while (cont) {
       Serial.write(27);
       Serial.print("[H");
       draw_board();
@@ -298,14 +298,14 @@ void loop() {
         } else if (c == 111) {
           rotate();
         } else if (c == 32) {
-          while (move_down() == 1) {}
+          while (move_down()) {}
         }
       } else {
         cont = move_down();
       }
       delay(60 - (10*level));
     }
-    if (posY < 1) gameOver = 1;         
+    if (posY < 1) gameOver = true;         
   }
   
   if (score > highScore) {
@@ -319,30 +319,30 @@ void init_board() {
   int x,y;
   for (y=0;y<20;y++) {
     for (x=0;x<10;x++) {
-      board[y][x] = 0;
+      board[y][x] = false;
     }
   }
 }
 
 void clear_lines() {
   int x,y,i,n;
-  int newBoard[20][10];
+  boolean newBoard[20][10];
   
   for (y=0;y<20;y++) {
     for (x=0;x<10;x++) {
-      newBoard[y][x] = 0;
+      newBoard[y][x] = false;
     }
   }
     
   int ni=19;
   for (i=19;i>=0;i--) {
-    int line=1;
+    boolean line = true;
     for (n=0;n<10;n++) {
-      if (board[i][n] == 0) {
-        line = 0;
+      if (!board[i][n]) {
+        line = false;
       }
     }
-    if (line == 0) {
+    if (!line) {
       for (n=0;n<10;n++) {
         newBoard[ni][n] = board[i][n];
       }
@@ -366,10 +366,10 @@ void draw_board() {
   int x,y;
   for (y=0;y<20;y++) {
     for (x=0;x<10;x++) {
-      if (board[y][x] != 0) {
-        Serial.print("#");
+      if (board[y][x]) {
+        Serial.print('#');
       } else {
-        Serial.print(".");
+        Serial.print('.');
       }
     }
     if (y == 2) {
@@ -391,8 +391,8 @@ void draw_block() {
   int i,n;
   for (i=0;i<4;i++) {
     for (n=0;n<4;n++) {
-      if (block[currentBlock][rotation][i][n] != 0) {
-        board[i+posY][n+posX] = 1;
+      if (block[currentBlock][rotation][i][n]) {
+        board[i+posY][n+posX] = true;
       }
     }
   }
@@ -402,83 +402,83 @@ void clear_block() {
   int i,n;
   for (i=0;i<4;i++) {
     for (n=0;n<4;n++) {
-      if (block[currentBlock][rotation][i][n] != 0) {
-        board[i+posY][n+posX] = 0;
+      if (block[currentBlock][rotation][i][n]) {
+        board[i+posY][n+posX] = false;
       }
     }
   }
 }
 
-int collision_detected(int y,int x) {
+boolean collision_detected(int y,int x) {
   int i,n;
   for (i=0;i<4;i++) {
     for (n=0;n<4;n++) {
-      if (block[currentBlock][rotation][i][n] != 0) {
+      if (block[currentBlock][rotation][i][n]) {
         if ((i+y) >= 20) {
-          return 1;
+          return true;
         } else if ((n+x) >= 10) {
-          return 1;
+          return true;
         } else if ((n+x) < 0) {
-          return 1;
-        } else if ((overlap(i+y,n+x) == 0) && (board[i+y][n+x] != 0)) {
-          return 1;
+          return true;
+        } else if ((overlap(i+y,n+x) == 0) && (board[i+y][n+x])) {
+          return true;
         }
       }
     }
   }
-  return 0;
+  return false;
 }
 
-int overlap(int y,int x) {
+boolean overlap(int y,int x) {
   int diffX = 0;
   int diffY = 0;
   if ((y >= posY)&&(y < posY+4)) {
     diffY = y-posY;
   } else {
-    return 0;
+    return false;
   }
   
   if ((x >= posX)&&(x < posX+4)) {
     diffX = x-posX;
   } else {
-    return 0;
+    return false;
   }
   
-  if (block[currentBlock][rotation][diffY][diffX] != 0) {
-      return 1;
+  if (block[currentBlock][rotation][diffY][diffX]) {
+      return true;
   }
   
-  return 0;
+  return false;
 }
 
-int move_down() {
-  if (collision_detected(posY+1,posX) != 1) {
+boolean move_down() {
+  if (!collision_detected(posY+1,posX)) {
     clear_block();
     posY++;
     draw_block();
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
-int move_right() {
-  if (collision_detected(posY,posX+1) != 1) {
+boolean move_right() {
+  if (!collision_detected(posY,posX+1)) {
     clear_block();
     posX++;
     draw_block();
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
-int move_left() {
-  if (collision_detected(posY,posX-1) != 1) {
+boolean move_left() {
+  if (!collision_detected(posY,posX-1)) {
     clear_block();
     posX--;
     draw_block();
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 void rotate() {
@@ -488,7 +488,7 @@ void rotate() {
   if (rotation > 3) {
     rotation = 0;
   }
-  if (collision_detected(posY,posX) == 1) {
+  if (collision_detected(posY,posX)) {
     rotation = p;
   }
   draw_block();
