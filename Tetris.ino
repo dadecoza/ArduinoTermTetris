@@ -13,13 +13,13 @@
  
  created 23 May  2014
  by Johannes le Roux (dade@dade.co.za) 
+ 
+ Thanks aquarat for help optimizing the code
 */
-
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <EEPROM.h>
-
 
 int posX,posY,currentBlock,rotation,gameOver,score,highScore,level;
 
@@ -30,190 +30,190 @@ boolean const block[7][4][4][4]=
 //l-Block
   {
       {
-          {true,true,true,true},
-          {false,false,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,1,1},
+          {0,0,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,false,false,false},
-          {true,false,false,false},
-          {true,false,false,false},
-          {true,false,false,false}
+          {1,0,0,0},
+          {1,0,0,0},
+          {1,0,0,0},
+          {1,0,0,0}
       },
       {
-          {true,true,true,true},
-          {false,false,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,1,1},
+          {0,0,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,false,false,false},
-          {true,false,false,false},
-          {true,false,false,false},
-          {true,false,false,false}
+          {1,0,0,0},
+          {1,0,0,0},
+          {1,0,0,0},
+          {1,0,0,0}
       }
   },	
 //J-Block
   {
       {
-          {true,true,true,false},
-          {false,false,true,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,1,0},
+          {0,0,1,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {false,true,false,false},
-          {false,true,false,false},
-          {true,true,false,false},
-          {false,false,false,false}
+          {0,1,0,0},
+          {0,1,0,0},
+          {1,1,0,0},
+          {0,0,0,0}
       },
       {
-          {true,false,false,false},
-          {true,true,true,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,0,0,0},
+          {1,1,1,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,true,false,false},
-          {true,false,false,false},
-          {true,false,false,false},
-          {false,false,false,false}
+          {1,1,0,0},
+          {1,0,0,0},
+          {1,0,0,0},
+          {0,0,0,0}
       }
   },
 //L-Block
   {
       {
-          {true,true,true,false},
-          {true,false,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,1,0},
+          {1,0,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,true,false,false},
-          {false,true,false,false},
-          {false,true,false,false},
-          {false,false,false,false}
+          {1,1,0,0},
+          {0,1,0,0},
+          {0,1,0,0},
+          {0,0,0,0}
       },
       {
-          {false,false,true,false},
-          {true,true,true,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {0,0,1,0},
+          {1,1,1,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,false,false,false},
-          {true,false,false,false},
-          {true,true,false,false},
-          {false,false,false,false}
+          {1,0,0,0},
+          {1,0,0,0},
+          {1,1,0,0},
+          {0,0,0,0}
       }
   },
 //O-Block
   {
       {
-          {true,true,false,false},
-          {true,true,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,0,0},
+          {1,1,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,true,false,false},
-          {true,true,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,0,0},
+          {1,1,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,true,false,false},
-          {true,true,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,0,0},
+          {1,1,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,true,false,false},
-          {true,true,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,0,0},
+          {1,1,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       }
   },
 //S-Block
   {
       {
-          {false,true,true,false},
-          {true,true,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {0,1,1,0},
+          {1,1,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,false,false,false},
-          {true,true,false,false},
-          {false,true,false,false},
-          {false,false,false,false}
+          {1,0,0,0},
+          {1,1,0,0},
+          {0,1,0,0},
+          {0,0,0,0}
       },
       {
-          {false,true,true,false},
-          {true,true,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {0,1,1,0},
+          {1,1,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,false,false,false},
-          {true,true,false,false},
-          {false,true,false,false},
-          {false,false,false,false}
+          {1,0,0,0},
+          {1,1,0,0},
+          {0,1,0,0},
+          {0,0,0,0}
       }
   },
 //T-Block
   {
       {
-          {true,true,true,false},
-          {false,true,false,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,1,0},
+          {0,1,0,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {false,true,false,false},
-          {true,true,false,false},
-          {false,true,false,false},
-          {false,false,false,false}
+          {0,1,0,0},
+          {1,1,0,0},
+          {0,1,0,0},
+          {0,0,0,0}
       },
       {
-          {false,true,false,false},
-          {true,true,true,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {0,1,0,0},
+          {1,1,1,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,false,false,false},
-          {true,true,false,false},
-          {true,false,false,false},
-          {false,false,false,false}
+          {1,0,0,0},
+          {1,1,0,0},
+          {1,0,0,0},
+          {0,0,0,0}
       }
   },
 //Z-Block
   {
       {
-          {true,true,false,false},
-          {false,true,true,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,0,0},
+          {0,1,1,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {false,true,false,false},
-          {true,true,false,false},
-          {true,false,false,false},
-          {false,false,false,false}
+          {0,1,0,0},
+          {1,1,0,0},
+          {1,0,0,0},
+          {0,0,0,0}
       },
       {
-          {true,true,false,false},
-          {false,true,true,false},
-          {false,false,false,false},
-          {false,false,false,false}
+          {1,1,0,0},
+          {0,1,1,0},
+          {0,0,0,0},
+          {0,0,0,0}
       },
       {
-          {false,true,false,false},
-          {true,true,false,false},
-          {true,false,false,false},
-          {false,false,false,false}
+          {0,1,0,0},
+          {1,1,0,0},
+          {1,0,0,0},
+          {0,0,0,0}
       }
   }
 }; 
@@ -305,11 +305,8 @@ void loop() {
       }
       delay(60 - (10*level));
     }
-    if (posY < 1) gameOver = true;         
-  }
-  
-  if (score > highScore) {
-    save_high_score();
+    if (posY < 1) gameOver = true;
+    if (score > highScore) save_high_score();
   }
   
   start();  
@@ -504,4 +501,5 @@ int get_high_score() {
 void save_high_score() {
   EEPROM.write(0, (score & 0xFF));
   EEPROM.write(1, ((score >> 8) & 0xFF));
+  highScore = score;
 }
